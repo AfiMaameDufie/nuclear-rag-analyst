@@ -17,6 +17,7 @@ Prerequisites:
 import os
 from dotenv import load_dotenv
 import pymongo
+import certifi
 
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
 from llama_index.core.settings import Settings
@@ -39,7 +40,7 @@ EMBED_DIM = 1536
 
 def main():
     print("Connecting to MongoDB Atlas...")
-    client = pymongo.MongoClient(MONGODB_URI)
+    client = pymongo.MongoClient(MONGODB_URI, tlsCAFile=certifi.where())
 
     # Smoke-test the connection
     client.admin.command("ping")

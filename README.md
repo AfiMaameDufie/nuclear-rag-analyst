@@ -17,15 +17,23 @@ Django + MongoDB Atlas Vector Search + LlamaIndex + Voyage AI + GPT-4 demo for a
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
 ```
 
-Fill in `.env` with your own values.
+Create `.env` at the project root and fill in your values:
+
+```dotenv
+DJANGO_SECRET_KEY=replace-with-a-local-dev-secret
+DEBUG=True
+MONGODB_URI=your-mongodb-atlas-connection-string
+MONGODB_DB=nuclear_rag
+OPENAI_API_KEY=your-openai-key
+VOYAGE_API_KEY=your-voyage-key
+```
 
 For a quick install command in demos:
 
 ```bash
-pip install llama-index pymongo llama-index-vector-stores-mongodb llama-index-embeddings-voyageai voyageai openai python-dotenv django-mongodb-backend
+pip install llama-index pymongo llama-index-vector-stores-mongodb llama-index-embeddings-voyageai voyageai openai python-dotenv django-mongodb-backend certifi
 ```
 
 ## Dataset
@@ -79,3 +87,14 @@ python manage.py runserver
 ```
 
 Open `http://127.0.0.1:8000/`.
+
+## Troubleshooting
+
+- `ModuleNotFoundError: No module named 'dotenv'`:
+
+  ```bash
+  pip install -r requirements.txt
+  python query.py --query "test"
+  ```
+
+- If `python` points to the wrong interpreter, always run scripts via `.venv/bin/python`.

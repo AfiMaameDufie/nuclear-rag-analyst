@@ -15,6 +15,7 @@ import argparse
 import os
 from dotenv import load_dotenv
 import pymongo
+import certifi
 
 from llama_index.core import VectorStoreIndex
 from llama_index.core.settings import Settings
@@ -72,7 +73,7 @@ DEMO_QUERIES = [
 
 
 def build_query_engine():
-    client = pymongo.MongoClient(MONGODB_URI)
+    client = pymongo.MongoClient(MONGODB_URI, tlsCAFile=certifi.where())
     client.admin.command("ping")
 
     embed_model = VoyageEmbedding(
