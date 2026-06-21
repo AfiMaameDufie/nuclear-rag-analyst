@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuclear Energy Intelligence Analyst</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* MongoDB palette — light theme */
+    :root {
+      --mg-green:      #00ED64;
+      --mg-forest:     #00684A;
+      --mg-dark:       #001E2B;
+      --bg:            #F9FBFA;
+      --surface:       #FFFFFF;
+      --border:        #E8EDEB;
+      --text:          #001E2B;
+      --text-muted:    #5C6C75;
+      --accent:        #00684A;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-dot {
+      width: 10px; height: 10px;
+      background: var(--mg-green);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    header h1 { font-size: 1.15rem; font-weight: 700; color: var(--mg-dark); letter-spacing: -.02em; }
+    header p  { font-size: .85rem; color: var(--text-muted); margin-top: .15rem; }
+    .stack {
+      display: flex; gap: .4rem; flex-wrap: wrap; margin-left: auto;
+    }
+    .badge {
+      background: #E8F9F1;
+      border: 1px solid #B8E8D0;
+      color: var(--mg-forest);
+      font-size: .68rem;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    main { max-width: 800px; margin: 2.5rem auto; padding: 0 1.25rem; }
+
+    .ask-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .ask-card label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .65rem;
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: .97rem;
+      line-height: 1.6;
+      padding: .8rem 1rem;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color .15s;
+      font-family: inherit;
+    }
+    textarea:focus { outline: none; border-color: var(--mg-forest); }
+
+    .btn-row { margin-top: .75rem; }
+    button[type="submit"] {
+      background: var(--mg-forest);
+      color: #fff;
+      font-weight: 600;
+      font-size: .9rem;
+      border: none;
+      border-radius: 7px;
+      padding: .6rem 1.4rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    button[type="submit"]:hover { background: #004d37; }
+
+    .demos { margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .demos p { font-size: .75rem; color: var(--text-muted); margin-bottom: .5rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .demo-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .pill {
+      background: #F0FAF5;
+      border: 1px solid #C8E6D8;
+      color: var(--mg-forest);
+      font-size: .78rem;
+      border-radius: 99px;
+      padding: .3rem .8rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      font-family: inherit;
+    }
+    .pill:hover { background: #D8F3E7; border-color: var(--mg-forest); }
+
+    .answer-card {
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .answer-label {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .75rem; font-weight: 600; color: var(--mg-forest);
+      text-transform: uppercase; letter-spacing: .06em;
+      margin-bottom: 1rem;
+    }
+    .answer-label::before {
+      content: '';
+      display: block; width: 8px; height: 8px;
+      background: var(--mg-green); border-radius: 50%;
+    }
+    .answer-body { line-height: 1.75; font-size: .95rem; color: var(--text); }
+
+    .answer-body table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .88rem; }
+    .answer-body th {
+      background: #F0FAF5;
+      color: var(--mg-forest);
+      padding: .5rem .85rem;
+      text-align: left;
+      border: 1px solid #C8E6D8;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .answer-body td { padding: .45rem .85rem; border: 1px solid var(--border); }
+    .answer-body tr:nth-child(even) td { background: #FAFCFB; }
+    .answer-body p { margin-bottom: .75rem; }
+    .answer-body ul, .answer-body ol { padding-left: 1.4rem; margin-bottom: .75rem; }
+    .answer-body li { margin-bottom: .3rem; }
+    .answer-body strong { color: var(--mg-dark); }
+    .answer-body code { background: #EFF2F0; padding: .1rem .35rem; border-radius: 4px; font-size: .87em; }
+
+    .error-card {
+      margin-top: 1.25rem;
+      background: #FFF5F5;
+      border: 1px solid #FECACA;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      color: #991B1B;
+      font-size: .88rem;
+    }
+
+    footer {
+      text-align: center;
+      color: #A0ADB4;
+      font-size: .75rem;
+      padding: 2.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-dot"></div>
+  <div>
+    <h1>Nuclear Energy Intelligence Analyst</h1>
+    <p>Ask plain-English questions over global nuclear energy data (2015–2025)</p>
+  </div>
+  <div class="stack">
+    <span class="badge">MongoDB Atlas</span>
+    <span class="badge">Voyage AI</span>
+    <span class="badge">LlamaIndex</span>
+    <span class="badge">GPT-4</span>
+  </div>
+</header>
+
+<main>
+  <div class="ask-card">
+    <form method="post">
+      {% csrf_token %}
+      <label for="question">Ask a question</label>
+      <textarea
+        name="question"
+        id="question"
+        placeholder="Which countries generated the most nuclear electricity in 2025, and how dependent are they on it?"
+      >{{ question }}</textarea>
+      <div class="btn-row">
+        <button type="submit">Ask →</button>
+      </div>
+    </form>
+
+    <div class="demos">
+      <p>Try a demo question:</p>
+      <div class="demo-pills">
+        {% for q in demo_questions %}
+          <button class="pill" type="button" onclick="setQuestion(this)">{{ q }}</button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if error %}
+    <div class="error-card">⚠ {{ error }}</div>
+  {% endif %}
+
+      {% if answer %}
+    <div class="answer-card">
+      <div class="answer-label">Answer — grounded in retrieved dataset records</div>
+      <div class="answer-body" id="answer-body"></div>
+    </div>
+    {{ answer|json_script:"answer-data" }}
+    <script>
+      const raw = JSON.parse(document.getElementById("answer-data").textContent);
+      document.getElementById("answer-body").innerHTML = renderMarkdown(raw);
+
+      function renderMarkdown(text) {
+        // Tables
+        text = text.replace(/^\|(.+)\|\s*$/gm, line => line); // keep
+        const tableRe = /((?:^\|.+\|\s*\n)+)/gm;
+        text = text.replace(tableRe, block => {
+          const rows = block.trim().split("\n").filter(r => !/^\|[-| :]+\|/.test(r));
+          if (rows.length < 2) return block;
+          const [header, ...body] = rows;
+          const th = header.split("|").filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`).join("");
+          const trs = body.map(r => {
+            const tds = r.split("|").filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`).join("");
+            return `<tr>${tds}</tr>`;
+          }).join("");
+          return `<table><thead><tr>${th}</tr></thead><tbody>${trs}</tbody></table>`;
+        });
+        // Bold
+        text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        // Code
+        text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+        // Paragraphs
+        text = text.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g," ")}</p>`).join("");
+        return text;
+      }
+    </script>
+  {% endif %}
+</main>
+
+<footer>Powered by MongoDB Atlas · Voyage AI · LlamaIndex · GPT-4 · Django</footer>
+
+<script>
+  function setQuestion(btn) {
+    document.getElementById("question").value = btn.textContent.trim();
+    document.getElementById("question").focus();
+  }
+</script>
+</body>
+</html>
