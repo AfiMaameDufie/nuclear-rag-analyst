@@ -1,13 +1,13 @@
 # Nuclear RAG Analyst
 
-Django + MongoDB Atlas Vector Search + LlamaIndex + Voyage AI + GPT-4 demo for asking natural-language questions over global nuclear energy data.
+Django + MongoDB Vector Search + LlamaIndex + Voyage AI + GPT-4 demo for asking natural-language questions over global nuclear energy data.
 
 ## What It Does
 
 - Converts the Kaggle CSV into one JSON file per country-year row.
 - Embeds the JSON records with Voyage AI.
 - Stores vectors in MongoDB Atlas.
-- Retrieves relevant records with Atlas Vector Search.
+- Retrieves relevant records with MongoDB Vector Search.
 - Uses GPT-4 through LlamaIndex to return grounded, quantitative answers.
 - Includes a minimal Django UI for screen-recorded demos.
 
